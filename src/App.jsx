@@ -16,16 +16,29 @@ import ProtectedRoute from "components/protectedRoute/ProtectedRoute"; // Import
 
 import Groupe from "views/client/Groupe";
 import NewsDetails from "views/client/News";
+import SettingsService from "services/settingsService";
 
 const App = () => {
-  const [isCastingActive, setIsCastingActive] = useState(true);
+  const [isCastingActive, setIsCastingActive] = useState(null); // Initialiser à `null` pour différencier le chargement
+  const [loading, setLoading] = useState(true); // État de chargement
+  const [error, setError] = useState(null); // État des erreurs
 
+  // Charger les paramètres depuis l'API au démarrage
   useEffect(() => {
-    const savedState = localStorage.getItem("castingActive");
-    if (savedState !== null) {
-      setIsCastingActive(JSON.parse(savedState));
-    }
+    const fetchSettings = async () => {
+      try {
+        const data = await SettingsService.getSettings(); // Appelle l'API
+        setIsCastingActive(data.isCastingActive); // Mets à jour l'état avec les données récupérées
+        setLoading(false);
+      } catch (err) {
+        setError("Erreur lors du chargement des paramètres.");
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
+
 
   return (
     <Routes>
@@ -43,8 +56,16 @@ const App = () => {
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/groupe/:id" element={<Groupe />} />
       <Route path="/news" element={<NewsDetails />} />
-      <Route path="/casting" element={isCastingActive ? <Casting /> : <Nocasting />} />
-      <Route path="/aboutomhy" element={<About />} />
+      <Route 
+        path="/casting" 
+        element={
+          isCastingActive !== null ? (
+            isCastingActive ? <Casting /> : <Nocasting />
+          ) : (
+            <div>Chargement...</div> // Sécurité supplémentaire au cas où
+          )
+        } 
+      />      <Route path="/aboutomhy" element={<About />} />
       <Route path="/artistdetails" element={<ArtistDetails />} />
       <Route path="/albums" element={<Albums />} />
       <Route path="/albums/:id" element={<AlbumDetail />} />
