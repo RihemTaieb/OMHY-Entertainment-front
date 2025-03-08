@@ -272,35 +272,47 @@ const Casting = () => {
           </div>
         </header>
 
-       <div className="casting-form-container p-10 px-4 sm:px-10">
-  <form className="bg-[#111] p-10 rounded-lg shadow-lg text-[#fff] max-w-3xl mx-auto" onSubmit={handleSubmit}>
-    <h3 className="text-4xl font-bold text-center mb-8">Casting Subscription</h3>
-    
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4 gap-y-6">
+       <div className="casting-form-container p-10">
+          <form className="bg-[#111] p-10 rounded-lg shadow-lg text-[#fff]  max-w-3xl mx-auto" onSubmit={handleSubmit}>
+            <h3 className="text-4xl font-bold text-center mb-8">Casting Subscription</h3>
+            <p>{Casting.link }</p>
+            
+            {adminMessage && (
+  <div className="mb-6 p-4 bg-black-100 border-l-4 border-black-500 text-black-800 rounded ">
+    <p className="text-[red]"><strong>IMPORTANT</strong></p>
+    <p
+            className="text-[#fff]"
+            style={{ whiteSpace: "pre-line" }}
+            dangerouslySetInnerHTML={{ __html: formatText(adminMessage) }}
+          />
+  </div>
+)}
+
+<div className="grid grid-cols-1 gap-4 gap-y-6">
       <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
       <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email Address" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
       <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone Number" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
       <input type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="Home Address" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
       <input type="text" name="social" value={formData.social} onChange={handleInputChange} placeholder="Instagram/Facebook (Optional)" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" />
       <input type="number" name="age" value={age} onChange={handleAgeChange} placeholder="Age" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
-      
+
       {isUnder18 && (
         <>
           <input type="text" name="parentName" value={formData.parentName} onChange={handleInputChange} placeholder="Parent Full Name" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
           <input type="tel" name="parentContact" value={formData.parentContact} onChange={handleInputChange} placeholder="Parent's Contact Number" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
         </>
       )}
-      
-      <textarea name="profile" value={formData.profile} onChange={handleInputChange} placeholder="Describe yourself (max 300 characters)" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444] col-span-2" maxLength="300" rows="4"></textarea>
+
+      <textarea name="profile" value={formData.profile} onChange={handleInputChange} placeholder="Describe yourself (max 300 characters)" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" maxLength="300" rows="4"></textarea>
       <input type="file" name="video" onChange={handleFileChange} accept="video/*" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
     </div>
 
-    {/* Bouton amélioré */}
+    {/* Bouton */}
     <button type="submit" className="w-full max-w-sm mx-auto p-3 mt-4 rounded-full border border-[#ddd] text-[#ddd] hover:bg-[#ddd] hover:text-[#111] transition-all duration-300">
       Submit
     </button>
-  </form>
-</div>
+          </form>
+        </div>
 
 
         <SocialIconsContainer>
