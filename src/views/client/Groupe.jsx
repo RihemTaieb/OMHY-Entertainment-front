@@ -463,13 +463,15 @@ const Groupe = () => {
     margin: '20px 0',
   }}
 >
-  <ReactPlayer 
-    url={`${group.lienvideo} `}
-    controls 
-    width="90%" // Réduction de la largeur
-    height="500px" // Réduction de la hauteur
-  />
-  
+
+  <ReactPlayer
+  url={`${group.lienvideo} `}
+  controls
+  width="90%" // Largeur à 90% du conteneur
+  height="auto" // Hauteur automatique
+  style={{ aspectRatio: "16/9" }} // Garde les proportions sans couper
+/>
+
 </div>
 
         </div>
