@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    git clone https://github.com/RihemTaieb/OMHY-Entertainment-front.git frontend
+                    git clone git@github.com:RihemTaieb/OMHY-Entertainment-front.git frontend
                     '''
                 }
             }
