@@ -976,10 +976,12 @@ const Profile = () => {
 /* Image responsive */
 .details-image {
   width: 200px;
-  height: auto;
-  border-radius: 8px;
+  height: 200px; /* Hauteur égale à la largeur pour un carré */
+  object-fit: cover; /* Pour que l'image couvre entièrement le carré sans déformation */
+  border-radius: 8px; /* Coins arrondis si tu le souhaites */
   margin-right: 20px;
 }
+
 
 /* Responsive : Passage en colonne sur mobile */
 @media screen and (max-width: 768px) {
