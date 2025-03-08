@@ -29,33 +29,37 @@ function NewsTable() {
     }
   };
 
-  const handleAddOrEditNews = async () => {
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("titre", formData.titre);
-      formDataToSend.append("contenu", formData.contenu);
-      formDataToSend.append("date", formData.date);
-      formDataToSend.append("lien", formData.lien);
+ const handleAddOrEditNews = async () => {
+  try {
+    const formDataToSend = new FormData();
+    formDataToSend.append("titre", formData.titre);
+    formDataToSend.append("contenu", formData.contenu);
+    formDataToSend.append("date", formData.date);
+    formDataToSend.append("lien", formData.lien);
 
-
-      // Append image if present
-      if (formData.image) {
-        formDataToSend.append("image", formData.image);
-      }
-
-      if (isEditMode) {
-        await NewsService.updateNews(editNewsId, formDataToSend);
-      } else {
-        await NewsService.createNews(formDataToSend);
-      }
-
-      fetchNews();
-      setModalVisible(false);
-      resetForm();
-    } catch (error) {
-      console.error("Failed to save news:", error);
+    // Ajout de l'image si elle est présente
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
     }
-  };
+
+    if (isEditMode) {
+      await NewsService.updateNews(editNewsId, formDataToSend);
+    } else {
+      await NewsService.createNews(formDataToSend);
+    }
+
+    // Affiche un message de succès
+    alert("Actualité ajoutée ou modifiée avec succès !");
+
+    // Actualise la liste des actualités
+    fetchNews();
+    setModalVisible(false);
+    resetForm();
+  } catch (error) {
+    console.error("Échec de la sauvegarde de l'actualité :", error);
+    alert("Une erreur est survenue lors de la sauvegarde de l'actualité.");
+  }
+};
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
