@@ -1005,12 +1005,13 @@ const Groupe = () => {
           justify-content: space-between;
         }
 
-        .details-image {
-          width: 200px;
-          height: auto;
-          border-radius: 8px;
-          margin-right: 20px;
-        }
+     .details-image {
+  width: 200px;
+  height: 200px; /* Hauteur égale à la largeur pour un carré */
+  object-fit: cover; /* Pour que l'image couvre entièrement le carré sans déformation */
+  border-radius: 8px; /* Coins arrondis si tu le souhaites */
+  margin-right: 20px;
+}
 
         .details-info {
           flex: 1;
