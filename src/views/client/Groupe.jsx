@@ -9,6 +9,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faSpotify } from "@fortawesome/free-brands-svg-icons";
 import Slider from 'react-slick'; // Assuming you're using react-slick for the carousel
 
+// Flèche précédente
+const PrevArrow = ({ onClick }) => (
+  <button 
+    className="slick-prev"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      left: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgba(0, 0, 0, 0.5)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
+
+// Flèche suivante
+const NextArrow = ({ onClick }) => (
+  <button 
+    className="slick-next"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      right: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgba(0, 0, 0, 0.5)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
 const GoBackButton = styled.button`
   position: fixed;
   bottom: 20px;
@@ -238,6 +285,9 @@ const Groupe = () => {
       setSelectedChanson(group.chansons[newIndex]);
     },
   // Pas de padding pour centrer les éléments
+  
+  prevArrow: <PrevArrow />,  // Flèche gauche personnalisée
+  nextArrow: <NextArrow />,  // Flèche droite personnalisée
   };
   const handleAlbumClick = (album) => {
     setSelectedAlbum(album); // Définit l'album sélectionné
@@ -463,15 +513,13 @@ const Groupe = () => {
     margin: '20px 0',
   }}
 >
-
-  <ReactPlayer
-  url={`${group.lienvideo} `}
-  controls
-  width="90%" // Largeur à 90% du conteneur
-  height="auto" // Hauteur automatique
-  style={{ aspectRatio: "16/9" }} // Garde les proportions sans couper
-/>
-
+  <ReactPlayer 
+    url={`${group.lienvideo} `}
+    controls 
+    width="90%" // Réduction de la largeur
+    height="500px" // Réduction de la hauteur
+  />
+  
 </div>
 
         </div>
@@ -624,10 +672,12 @@ const Groupe = () => {
                   alt={chanson.nom}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                     border: selectedChanson === chanson ? "2px solidrgb(36, 34, 37)" : "none",
                   }}
                 />
@@ -650,10 +700,12 @@ const Groupe = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                     border: selectedAlbum === album ? "2px solidrgb(82, 82, 82)" : "none",
                   }}
                 />
@@ -678,10 +730,12 @@ const Groupe = () => {
                   alt={chanson.nom}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{chanson.nom}</h3>
@@ -702,10 +756,12 @@ const Groupe = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{album.titre}</h3>
@@ -934,47 +990,27 @@ const Groupe = () => {
           border-radius: 8px;
         }
 
-       .details {
-  width: 90%; /* Plus fluide */
-  max-width: 800px; /* Largeur max */
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
+        .details {
+          width: 80%;
+          margin: 20px auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-/* Contenu flexible */
-.details-content {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px; /* Ajoute un espace entre les éléments */
-}
+        .details-content {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+        }
 
-/* Image responsive */
-.details-image {
-  width: 200px;
-  height: auto;
-  border-radius: 8px;
-  margin-right: 20px;
-}
-
-/* Responsive : Passage en colonne sur mobile */
-@media screen and (max-width: 768px) {
-  .details-content {
-    flex-direction: column;
-    align-items: center; /* Centre les éléments */
-    text-align: center; /* Centre le texte */
-  }
-
-  .details-image {
-    width: 100%; /* Image prend toute la largeur */
-    max-width: 300px; /* Taille max pour éviter qu’elle soit trop grande */
-    margin: 0 auto 15px auto; /* Centre l'image avec un espace en bas */
-  }
-}
-
+        .details-image {
+          width: 200px;
+          height: auto;
+          border-radius: 8px;
+          margin-right: 20px;
+        }
 
         .details-info {
           flex: 1;
