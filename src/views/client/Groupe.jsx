@@ -932,27 +932,47 @@ const Groupe = () => {
           border-radius: 8px;
         }
 
-        .details {
-          width: 80%;
-          margin: 20px auto;
-          padding: 20px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
+       .details {
+  width: 90%; /* Plus fluide */
+  max-width: 800px; /* Largeur max */
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        .details-content {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
+/* Contenu flexible */
+.details-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px; /* Ajoute un espace entre les éléments */
+}
 
-        .details-image {
-          width: 200px;
-          height: auto;
-          border-radius: 8px;
-          margin-right: 20px;
-        }
+/* Image responsive */
+.details-image {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+/* Responsive : Passage en colonne sur mobile */
+@media screen and (max-width: 768px) {
+  .details-content {
+    flex-direction: column;
+    align-items: center; /* Centre les éléments */
+    text-align: center; /* Centre le texte */
+  }
+
+  .details-image {
+    width: 100%; /* Image prend toute la largeur */
+    max-width: 300px; /* Taille max pour éviter qu’elle soit trop grande */
+    margin: 0 auto 15px auto; /* Centre l'image avec un espace en bas */
+  }
+}
+
 
         .details-info {
           flex: 1;
