@@ -815,7 +815,7 @@ Learn More
                     <p class="text-sm font-semibold text-gray-800">I'm interested in...</p>
 
                     <div className="flex flex-wrap gap-4 mb-6">
-      {['Business', 'Playing', 'Songwriting', 'Producing', 'DJing', 'Coaching'].map((interest) => (
+      {['Business', 'Playing', 'Songwriting', 'Producing', 'DJing', 'Coaching','Other'].map((interest) => (
         <button
           key={interest}
           type="button"
