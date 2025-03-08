@@ -13,6 +13,7 @@ import backgroundImage7 from "assets/img/background7.jpg";
 import backgroundImage8 from "assets/img/background8.jpg";
 import axios from "axios";
 import BackgroundImageService from "services/backgroundImageService";
+import SettingsService from "services/settingsService"; // Import du service des paramètres
 
 // Styled components for buttons and icons
 const ScrollToTopButton = styled.button`
@@ -245,12 +246,19 @@ const Casting = () => {
   };
   const [adminMessage, setAdminMessage] = useState("");
 
-  // Charger le message depuis localStorage au chargement de la page
   useEffect(() => {
-    const savedMessage = localStorage.getItem("adminMessage");
-    if (savedMessage !== null) {
-      setAdminMessage(savedMessage);
-    }
+    const fetchAdminMessage = async () => {
+      try {
+        const settings = await SettingsService.getSettings(); // Récupère les paramètres
+        if (settings?.adminMessage) {
+          setAdminMessage(settings.adminMessage); // Met à jour le state
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération du message admin :", error);
+      }
+    };
+
+    fetchAdminMessage(); // Appel de la fonction
   }, []);
   
   return (
@@ -272,21 +280,23 @@ const Casting = () => {
           </div>
         </header>
 
-       <div className="casting-form-container p-10">
+        <div className="casting-form-container p-10">
           <form className="bg-[#111] p-10 rounded-lg shadow-lg text-[#fff]  max-w-3xl mx-auto" onSubmit={handleSubmit}>
             <h3 className="text-4xl font-bold text-center mb-8">Casting Subscription</h3>
             <p>{Casting.link }</p>
             
             {adminMessage && (
-  <div className="mb-6 p-4 bg-black-100 border-l-4 border-black-500 text-black-800 rounded ">
-    <p className="text-[red]"><strong>IMPORTANT</strong></p>
-    <p
+        <div className="mb-6 p-4 bg-black-100 border-l-4 border-black-500 text-black-800 rounded">
+          <p className="text-[red]">
+            <strong>IMPORTANT</strong>
+          </p>
+          <p
             className="text-[#fff]"
             style={{ whiteSpace: "pre-line" }}
             dangerouslySetInnerHTML={{ __html: formatText(adminMessage) }}
           />
-  </div>
-)}
+        </div>
+      )}
 
 <div className="grid grid-cols-1 gap-4 gap-y-6">
       <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name" className="w-full p-3 rounded-md bg-[#222] text-[#ddd] border border-[#444]" required />
@@ -313,7 +323,6 @@ const Casting = () => {
     </button>
           </form>
         </div>
-
 
         <SocialIconsContainer>
       <SocialIcon href="https://www.facebook.com/profile.php?id=61563814656941" target="_blank"   className="hover:bg-[#3b5998] transition-colors duration-300">
