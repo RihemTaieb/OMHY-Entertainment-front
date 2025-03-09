@@ -736,38 +736,40 @@ Learn More
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:col-span-2">
-      {news
-        .slice(-4) // Affiche les 4 derniers articles
-        .map((article) => (
-          <div
-            key={article._id}
-            className="cursor-pointer rounded overflow-hidden group"
-            onClick={() => {
-              if (article.lien) {
-                window.open(article.lien, "_blank"); // Ouvre le lien dans un nouvel onglet
-              }
-            }}
-          >
-            <img
-              src={
-                article.image
-                  ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}/${article.image}`
-                  : "/default-placeholder.png"
-              }
-              alt={article.titre}
-              className="w-full h-52 object-cover rounded-md"
-            />
-            <div className="py-6">
-              <span className="text-sm block text-gray-400 mb-2">
-                {new Date(article.date).toLocaleDateString()}
-              </span>
-              <h3 className="text-xl font-bold text-[#111] group-hover:text-[#616161] transition-all">
-                {article.titre.toUpperCase()}
-              </h3>
-            </div>
-          </div>
-        ))}
-    </div>
+  {news
+    .sort((a, b) => new Date(b.date) - new Date(a.date)) // Trie du plus récent au plus ancien
+    .slice(0, 4) // Garde seulement les 4 derniers articles
+    .map((article) => (
+      <div
+        key={article._id}
+        className="cursor-pointer rounded overflow-hidden group"
+        onClick={() => {
+          if (article.lien) {
+            window.open(article.lien, "_blank"); // Ouvre le lien dans un nouvel onglet
+          }
+        }}
+      >
+        <img
+          src={
+            article.image
+              ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}/${article.image}`
+              : "/default-placeholder.png"
+          }
+          alt={article.titre}
+          className="w-full h-52 object-cover rounded-md"
+        />
+        <div className="py-6">
+          <span className="text-sm block text-gray-400 mb-2">
+            {new Date(article.date).toLocaleDateString()}
+          </span>
+          <h3 className="text-xl font-bold text-[#111] group-hover:text-[#616161] transition-all">
+            {article.titre.toUpperCase()}
+          </h3>
+        </div>
+      </div>
+    ))}
+</div>
+
       </div>
     </div>
 <div id="contact-us" class="mt-6 max-w-6xl max-lg:max-w-3xl mx-auto rounded-lg">
@@ -813,7 +815,7 @@ Learn More
                     <p class="text-sm font-semibold text-gray-800">I'm interested in...</p>
 
                     <div className="flex flex-wrap gap-4 mb-6">
-      {['Business', 'Playing', 'Songwriting', 'Producing', 'DJing', 'Coaching'].map((interest) => (
+      {['Business', 'Playing', 'Songwriting', 'Producing', 'DJing', 'Coaching','Other'].map((interest) => (
         <button
           key={interest}
           type="button"

@@ -7,6 +7,53 @@ import customLogo from '../../assets/img/custom-logo.png';
 import { StyleSheetManager ,styled } from 'styled-components';
 import Slider from 'react-slick'; // Assuming you're using react-slick for the carousel
 
+// Flèche précédente
+const PrevArrow = ({ onClick }) => (
+  <button 
+    className="slick-prev"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      left: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgb(185, 64, 64)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
+
+// Flèche suivante
+const NextArrow = ({ onClick }) => (
+  <button 
+    className="slick-next"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      right: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgb(185, 64, 64)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
 const GoBackButton = styled.button`
   position: fixed;
   bottom: 20px;
@@ -251,13 +298,15 @@ const Profile = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
-    focusOnSelect: true, // Pour que cliquer sur une carte la sélectionne
+    focusOnSelect: true, // Permet de cliquer sur un élément pour le sélectionner
     beforeChange: (oldIndex, newIndex) => {
-      // Synchroniser la chanson sélectionnée avec l'index actif
       setSelectedChanson(artist.chansons[newIndex]);
     },
-  // Pas de padding pour centrer les éléments
+    
+    prevArrow: <PrevArrow />,  // Flèche gauche personnalisée
+    nextArrow: <NextArrow />,  // Flèche droite personnalisée
   };
+  
   
   const formatDate = (date) => {
     const d = new Date(date);
@@ -321,9 +370,7 @@ const Profile = () => {
 <SocialIcon href="https://www.instagram.com/omhy__entertainment?igsh=Y3JzdDk1cmk3ejNl" target="_blank"className="hover:bg-gradient-to-r hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] transition-all duration-300 ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="17" cy="7" r="1.5" fill="#fff" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="1.3s" dur="0.15s" values="0;1"/></circle><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2"><path stroke-dasharray="72" stroke-dashoffset="72" d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="72;0"/></path><path stroke-dasharray="28" stroke-dashoffset="28" d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.6s" values="28;0"/></path></g></svg>
         </SocialIcon>
-        <SocialIcon href="https://www.instagram.com/omhy__entertainment?igsh=Y3JzdDk1cmk3ejNl" target="_blank"className="hover:bg-gradient-to-r hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] transition-all duration-300 ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="17" cy="7" r="1.5" fill="#fff" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="1.3s" dur="0.15s" values="0;1"/></circle><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2"><path stroke-dasharray="72" stroke-dashoffset="72" d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="72;0"/></path><path stroke-dasharray="28" stroke-dashoffset="28" d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.6s" values="28;0"/></path></g></svg>
-        </SocialIcon>
+       
         <SocialIcon
   href="https://www.tiktok.com/@omhy.entertainment"
   target="_blank"
@@ -452,12 +499,14 @@ const Profile = () => {
     margin: '20px 0',
   }}
 >
-  <ReactPlayer 
-    url={`${artist.lienvideo} `}
-    controls 
-    width="90%" // Réduction de la largeur
-    height="500px" // Réduction de la hauteur
-  />
+<ReactPlayer
+  url={artist.lienvideo}
+  controls
+  width="90%" // Largeur à 90% du conteneur
+  height="auto" // Hauteur automatique
+  style={{ aspectRatio: "16/9" }} // Garde les proportions sans couper
+/>
+
   
 </div>
 
@@ -503,10 +552,13 @@ const Profile = () => {
 >
  
 </div>
-<p className="font-semibold md:!leading-[50px] text-[#9d9d9d] font-bold underline">
+<p className="font-semibold md:!leading-[50px] text-[#9d9d9d] font-bold underline           fontSize: '1rem', // Taille adaptée pour mobiles
+">
 {`${formatDate(artist.dateDeJoindre)} `}          </p>
 
-      <div  style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ 
+      <div  style={{ whiteSpace: "pre-line", textAlign: 'center', // Texte centré pour une meilleure lisibilité
+          padding: '10px',
+          fontSize: '1rem', }} dangerouslySetInnerHTML={{ 
     __html: highlightName(
       `${artist.profile}`,
       artist.prenom,
@@ -524,12 +576,14 @@ const Profile = () => {
     margin: '20px 0',
   }}
 >
-  <ReactPlayer 
-    url={`${artist.lienvideo} `}
-    controls 
-    width="90%" // Réduction de la largeur
-    height="500px" // Réduction de la hauteur
-  />
+<ReactPlayer
+  url={artist.lienvideo}
+  controls
+  width="90%" // Largeur à 90% du conteneur
+  height="auto" // Hauteur automatique
+  style={{ aspectRatio: "16/9" }} // Garde les proportions sans couper
+/>
+
   
 </div>
         </div>
@@ -552,9 +606,10 @@ const Profile = () => {
 
       {/* Section Galerie */}
       <div className="carousel-container">
-        <h2><strong>Gallery</strong></h2>
        
-       
+      <h2 style={{ textAlign: 'center' }}>
+      <strong>Gallery</strong>
+    </h2>
         {artist.chansons.length + artist.albums.length === 0 ? (
           <p>Aucun contenu disponible.</p>
         ) : artist.chansons.length + artist.albums.length > 1 ? (
@@ -570,18 +625,25 @@ const Profile = () => {
                   setSelectedAlbum(null);
                 }}
               >
-                <img
-                  src={chanson.photo ?`${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}${chanson.photo}` : "/placeholder.jpg"}
-                  alt={chanson.nom}
-                  className="item-image"
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                    border: selectedChanson === chanson ? "2px solidrgb(36, 34, 37)" : "none",
-                  }}
-                />
+                
+               <img
+  src={chanson.photo 
+    ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}${chanson.photo}`
+    : "/placeholder.jpg"
+  }
+  alt={chanson.nom}
+  className="item-image"
+  style={{
+    width: "300px", // Taille carrée (ajuste selon tes besoins)
+    height: "300px",
+    objectFit: "cover",
+    borderRadius: "8px",
+    display: "block", // Permet de centrer avec margin auto
+    margin: "auto",
+    border: selectedChanson === chanson ? "2px solid rgb(36, 34, 37)" : "none",
+  }}
+/>
+
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{chanson.nom}</h3>
               </div>
             ))}
@@ -601,10 +663,12 @@ const Profile = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                     border: selectedAlbum === album ? "2px solidrgb(82, 82, 82)" : "none",
                   }}
                 />
@@ -629,10 +693,12 @@ const Profile = () => {
                   alt={chanson.nom}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{chanson.nom}</h3>
@@ -653,10 +719,12 @@ const Profile = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{album.titre}</h3>
@@ -666,8 +734,8 @@ const Profile = () => {
         )}
  {/* Détails d'une chanson */}
  {selectedChanson && (
-        <div className="details">
-          <div className="details-content">
+        <div className="details bg-[#111] p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
+          <div className="details-content grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <img
               src={selectedChanson.photo ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}${selectedChanson.photo}` : "/placeholder.jpg"}
               alt={selectedChanson.nom}
@@ -887,27 +955,49 @@ const Profile = () => {
           border-radius: 8px;
         }
 
-        .details {
-          width: 80%;
-          margin: 20px auto;
-          padding: 20px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
+      .details {
+  width: 90%; /* Plus fluide */
+  max-width: 800px; /* Largeur max */
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        .details-content {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
+/* Contenu flexible */
+.details-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px; /* Ajoute un espace entre les éléments */
+}
 
-        .details-image {
-          width: 200px;
-          height: auto;
-          border-radius: 8px;
-          margin-right: 20px;
-        }
+/* Image responsive */
+.details-image {
+  width: 200px;
+  height: 200px; /* Hauteur égale à la largeur pour un carré */
+  object-fit: cover; /* Pour que l'image couvre entièrement le carré sans déformation */
+  border-radius: 8px; /* Coins arrondis si tu le souhaites */
+  margin-right: 20px;
+}
+
+
+/* Responsive : Passage en colonne sur mobile */
+@media screen and (max-width: 768px) {
+  .details-content {
+    flex-direction: column;
+    align-items: center; /* Centre les éléments */
+    text-align: center; /* Centre le texte */
+  }
+
+  .details-image {
+    width: 100%; /* Image prend toute la largeur */
+    max-width: 300px; /* Taille max pour éviter qu’elle soit trop grande */
+    margin: 0 auto 15px auto; /* Centre l'image avec un espace en bas */
+  }
+}
+
 
         .details-info {
           flex: 1;

@@ -1,38 +1,63 @@
 import React, { useState, useEffect } from "react";
 import Card from "components/card"; // Chemin vers votre composant Card
 import CastingService from "services/castingService"; // Service API
+import SettingsService from "services/settingsService"; // Import du service
 
 function CastingTable() {
-  const [isCastingActive, setIsCastingActive] = useState(true);
+  const [settings, setSettings] = useState({
+    isCastingActive: false,
+    adminMessage: "",
+  });
 
-  // Charger l'état depuis localStorage au démarrage
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Charger les paramètres au chargement du composant
   useEffect(() => {
-    const savedState = localStorage.getItem("castingActive");
-    if (savedState !== null) {
-      setIsCastingActive(JSON.parse(savedState));
-    }
+    const fetchSettings = async () => {
+      try {
+        const data = await SettingsService.getSettings(); // Appelle le service pour récupérer les paramètres
+        setSettings(data);
+        setLoading(false);
+      } catch (err) {
+        setError("Erreur lors du chargement des paramètres.");
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
 
-  // Fonction pour basculer entre "Casting" et "NoCasting"
-  const toggleCastingVisibility = () => {
-    const newState = !isCastingActive;
-    setIsCastingActive(newState);
-    localStorage.setItem("castingActive", JSON.stringify(newState)); // Sauvegarde
+  // Fonction pour mettre à jour l'état du casting
+  const toggleCastingVisibility = async () => {
+    try {
+      const updatedSettings = {
+        ...settings,
+        isCastingActive: !settings.isCastingActive,
+      };
+      const data = await SettingsService.updateSettings(updatedSettings); // Appelle le service pour mettre à jour
+      setSettings(data);
+    } catch (err) {
+      setError("Erreur lors de la mise à jour des paramètres.");
+    }
   };
   const [adminMessage, setAdminMessage] = useState("");
 
-// Charger le message depuis localStorage au démarrage
-useEffect(() => {
-  const savedMessage = localStorage.getItem("adminMessage");
-  if (savedMessage !== null) {
-    setAdminMessage(savedMessage);
-  }
-}, []);
-const handleAdminMessageChange = (e) => {
-  const newMessage = e.target.value;
-  setAdminMessage(newMessage);
-  localStorage.setItem("adminMessage", newMessage);
-};
+  // Fonction pour mettre à jour le message administrateur
+  const handleAdminMessageChange = async (e) => {
+    const newMessage = e.target.value;
+    try {
+      const updatedSettings = { ...settings, adminMessage: newMessage };
+      const data = await SettingsService.updateSettings(updatedSettings); // Appelle le service
+      setSettings(data);
+    } catch (err) {
+      setError("Erreur lors de la mise à jour du message.");
+    }
+  };
+
+ 
+
+
 
   const [castings, setCastings] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +75,6 @@ const handleAdminMessageChange = (e) => {
   });
   const [isEditMode, setIsEditMode] = useState(false);
   const [editCastingId, setEditCastingId] = useState(null);
-  const [loading, setLoading] = useState(false); // Pour indiquer si les données se chargent
   const [filterText, setFilterText] = useState(""); // État pour le filtre texte
   const [showOnlySelected, setShowOnlySelected] = useState(false); // État pour le filtre étoile
 
@@ -211,26 +235,25 @@ const handleAdminMessageChange = (e) => {
         </button>
        
       </header>
-      <div className="flex items-center space-x-4">
-      <span className="text-gray-700 font-medium">
-        {isCastingActive ? "Casting Activé" : "NoCasting Activé"}
-      </span>
-      
-      <button
-        onClick={toggleCastingVisibility}
-        className={`relative w-14 h-8 flex items-center rounded-full p-1 transition-all ${
-          isCastingActive ? "bg-green-500" : "bg-red-700"
-        }`}
-      >
-        <div
-          className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-all ${
-            isCastingActive ? "translate-x-6" : "translate-x-0"
-          }`}
-        ></div>
+      <div className="flex items-center space-x-4 mb-6">
+        <span className="text-gray-700 font-medium">
+          {settings.isCastingActive ? "Casting Activé" : "Casting Désactivé"}
+        </span>
 
-      </button>
-      
-    </div>
+        <button
+          onClick={toggleCastingVisibility}
+          className={`relative w-14 h-8 flex items-center rounded-full p-1 transition-all ${
+            settings.isCastingActive ? "bg-green-500" : "bg-red-700"
+          }`}
+        >
+          <div
+            className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-all ${
+              settings.isCastingActive ? "translate-x-6" : "translate-x-0"
+            }`}
+          ></div>
+        </button>
+      </div>
+     
       {/* Barre de recherche et filtre étoile */}
       <div className="flex justify-between items-center mb-4">
         <input
@@ -253,22 +276,20 @@ const handleAdminMessageChange = (e) => {
       <div className="mt-4 p-4 border rounded bg-gray-100">
   <h3 className="text-lg font-semibold mb-2">Message Administrateur</h3>
   <textarea
-        value={adminMessage}
-        onChange={handleAdminMessageChange}
-        placeholder="Ajoutez un message pour les clients (entourez **mot** pour le mettre en gras)..."
-        wrap="soft"
-        className="border p-2 w-full h-24 rounded"
-      ></textarea>
-  {adminMessage && (
-  <div className="mt-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
-    <h3 className="text-lg font-semibold text-yellow-700">Annonce Importante :</h3>
-    <p
-            className="text-gray-800"
-            style={{ whiteSpace: "pre-line" }}
-            dangerouslySetInnerHTML={{ __html: formatText(adminMessage) }}
-          />  </div>
-)}
-
+          value={settings.adminMessage}
+          onChange={(e) => handleAdminMessageChange(e)}
+          placeholder="Ajoutez un message pour les clients (entourez **mot** pour le mettre en gras)..."
+          wrap="soft"
+          className="border p-2 w-full h-24 rounded"
+        ></textarea>
+  {settings.adminMessage && (
+        <div className="mt-6 p-4 bg-yellow-100 border border-yellow-400 rounded">
+          <h3 className="text-lg font-semibold text-yellow-700">Annonce Importante :</h3>
+          <p className="text-gray-800" style={{ whiteSpace: "pre-line" }}>
+            {settings.adminMessage}
+          </p>
+        </div>
+      )}
 </div>
 
       {loading ? (

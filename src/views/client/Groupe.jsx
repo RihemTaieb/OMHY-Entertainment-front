@@ -9,6 +9,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faSpotify } from "@fortawesome/free-brands-svg-icons";
 import Slider from 'react-slick'; // Assuming you're using react-slick for the carousel
 
+// Flèche précédente
+const PrevArrow = ({ onClick }) => (
+  <button 
+    className="slick-prev"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      left: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgb(185, 64, 64)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
+
+// Flèche suivante
+const NextArrow = ({ onClick }) => (
+  <button 
+    className="slick-next"
+    onClick={onClick}
+    style={{
+      position: "absolute",
+      right: "-50px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      zIndex: 10,
+      background: "rgb(185, 64, 64)",
+      border: "none",
+      borderRadius: "50%",
+      width: "40px",
+      height: "40px",
+      color: "white",
+      fontSize: "20px",
+      cursor: "pointer",
+    }}
+  >
+  </button>
+);
 const GoBackButton = styled.button`
   position: fixed;
   bottom: 20px;
@@ -238,6 +285,9 @@ const Groupe = () => {
       setSelectedChanson(group.chansons[newIndex]);
     },
   // Pas de padding pour centrer les éléments
+  
+  prevArrow: <PrevArrow />,  // Flèche gauche personnalisée
+  nextArrow: <NextArrow />,  // Flèche droite personnalisée
   };
   const handleAlbumClick = (album) => {
     setSelectedAlbum(album); // Définit l'album sélectionné
@@ -622,10 +672,12 @@ const Groupe = () => {
                   alt={chanson.nom}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                     border: selectedChanson === chanson ? "2px solidrgb(36, 34, 37)" : "none",
                   }}
                 />
@@ -648,10 +700,12 @@ const Groupe = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                     border: selectedAlbum === album ? "2px solidrgb(82, 82, 82)" : "none",
                   }}
                 />
@@ -676,10 +730,12 @@ const Groupe = () => {
                   alt={chanson.nom}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{chanson.nom}</h3>
@@ -700,10 +756,12 @@ const Groupe = () => {
                   alt={album.titre}
                   className="item-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "300px", // Taille carrée (ajuste selon tes besoins)
+                    height: "300px",
                     objectFit: "cover",
                     borderRadius: "8px",
+                    display: "block", // Permet de centrer avec margin auto
+                    margin: "auto",
                   }}
                 />
                 <h3 style={{ textAlign: "center", marginTop: "10px" }}>{album.titre}</h3>
@@ -947,12 +1005,13 @@ const Groupe = () => {
           justify-content: space-between;
         }
 
-        .details-image {
-          width: 200px;
-          height: auto;
-          border-radius: 8px;
-          margin-right: 20px;
-        }
+     .details-image {
+  width: 200px;
+  height: 200px; /* Hauteur égale à la largeur pour un carré */
+  object-fit: cover; /* Pour que l'image couvre entièrement le carré sans déformation */
+  border-radius: 8px; /* Coins arrondis si tu le souhaites */
+  margin-right: 20px;
+}
 
         .details-info {
           flex: 1;
