@@ -4,7 +4,7 @@ import customLogo from '../../assets/img/custom-logo.png';
 import customLogodark from '../../assets/img/custom-logo-dark.png'
 import imglogotrans from '../../assets/img/OMHY_3[1].png'
 import arriere from '../../assets/img/Capture d’écran 2025-02-19 134229.jpg'
-import olfa from '../../assets/img/olfa.jpeg'
+import olfa from '../../assets/img/Olfa.jpg'
 
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css"; 
@@ -489,7 +489,7 @@ const [formData, setFormData] = useState({
 >
  {/* Cadre avec ombre et bordure */}
  <motion.div
-   className="max-w-4xl w-full bg-white border border-gray-300 shadow-lg rounded-xl p-8 flex flex-col md:flex-row items-center gap-8"
+   className="max-w-6xl w-full bg-white border border-gray-300 shadow-lg rounded-xl p-8 flex flex-col md:flex-row items-center gap-8"
    initial={{ scale: 0.95 }}
    animate={{ scale: 1 }}
    transition={{ duration: 0.8, ease: "easeOut" }}
@@ -504,7 +504,7 @@ const [formData, setFormData] = useState({
      <img
        src={olfa} 
        alt="Founder"
-       className="rounded-full shadow-lg object-cover w-80 h-80 border-4 border-gray-200"
+       className="rounded-full shadow-lg object-cover w-90 h-90 border-4 border-gray-200"
      />
    </motion.div>
 
@@ -515,14 +515,18 @@ const [formData, setFormData] = useState({
      animate={{ opacity: 1, x: 0 }}
      transition={{ duration: 1, delay: 0.4 }}
    >
-     <p className="text-black leading-relaxed">
-       <strong>OMHY Entertainment </strong> was founded by{" "}
-       <strong>Olfa Jalel Revel</strong>, a visionary leader passionate about music and creativity.
-       With years of experience in the industry, she has built OMHY as a platform to discover and nurture exceptional talents.
+    <p className="text-black text-2xl font-bold leading-relaxed">
+  <strong>Olfa JALEL REVEL</strong>
+</p>
+     <p className="text-black leading-relaxed mt-4">
+     Born in Tunisia, she grew up in a family of musicians, surrounded by a family atmosphere of Hard Rock and Metal with bands such as Pink Floyd, Deep Purple, and Metallica. Despite this, she has always been attracted to Pop and is a huge fan of the King of Pop, Michael Jackson.
      </p>
      <p className="text-black leading-relaxed mt-4">
-       Her mission is to connect artists with global audiences, creating a community that thrives on innovation and collaboration.
-     </p>
+     At the beginning of her career, she moved away from music and obtained a professional diploma in "Economic Administrative Techniques". She joined a large import-export group for several years before moving into the real estate field, where she handled real estate transactions on the French Riviera. Always eager for new knowledge and skills, she began distance learning in fashion design and created a ready-to-wear clothing company. The dream of a musical project accompanied her throughout this career.     </p>
+    <p>She never gave up on her childhood dream and decided to make a career change. She began studies and training in the music business and obtained the "Phonographic Producer" certification. As a songwriter, her multiple inspirations, boundless imagination, and unique touch result in singular and original products.</p>
+    <p>To realize her musical project, she surrounded herself with a professional team passionate about music and the artistic world. Together, they work to create unique and innovative products.</p>
+    <p>Seduced by Pop and this multitude of styles, which provides a certain freedom of expression and creation, she adds her personal touch by mixing cultures, she thus creates an original style. Her productions have no borders or barriers, and she aims to reach a maximum number of listeners to connect with various cultures.</p>
+   <p>Through her label, she also wishes to support emerging artists who do not have the opportunity to build a career. By offering resources, advice, and a platform to express themselves, her label helps these talented artists reach their full potential and achieve their dreams.</p>
    </motion.div>
  </motion.div>
 </motion.section>
