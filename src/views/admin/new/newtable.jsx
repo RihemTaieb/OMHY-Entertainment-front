@@ -128,49 +128,50 @@ function NewsTable() {
         </button>
       </header>
 
-      <table className="w-full mt-6 table-auto border-collapse">
-        <thead>
-          <tr className="border-b">
-            <th className="py-2 text-left">Image</th>
-            <th className="py-2 text-left">Titre</th>
-            <th className="py-2 text-center">Date</th>
-            <th className="py-2 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {news.map((newsItem) => (
-            <tr key={newsItem._id} className="border-b">
-              <td className="py-2 text-left">
-                <img
-                  src={
-                    newsItem.image
-                      ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}/${newsItem.image}`
-                      : "/default-placeholder.png"
-                  }
-                  alt="News"
-                  className="w-12 h-12 rounded object-cover"
-                />
-              </td>
-              <td className="py-2 text-left">{newsItem.titre}</td>
-              <td className="py-2 text-center">{formatDate(newsItem.date)}</td>
-              <td className="py-2 text-center flex space-x-2 justify-center">
-                <button
-                  onClick={() => handleEditClick(newsItem)}
-                  className="bg-[#cc81a1] text-white px-2 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteNews(newsItem._id)}
-                  className="bg-[#595959] text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+<table className="w-full mt-6 table-auto border-collapse">
+  <thead>
+    <tr className="border-b">
+      <th className="py-2 text-left">Image</th>
+      <th className="py-2 text-left">Titre</th>
+      <th className="py-2 text-center">Date</th>
+      <th className="py-2 text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {news.slice().reverse().map((newsItem) => (
+      <tr key={newsItem._id} className="border-b">
+        <td className="py-2 text-left">
+          <img
+            src={
+              newsItem.image
+                ? `${process.env.REACT_APP_API_BASE_URL.replace('/api', '')}/${newsItem.image}`
+                : "/default-placeholder.png"
+            }
+            alt="News"
+            className="w-12 h-12 rounded object-cover"
+          />
+        </td>
+        <td className="py-2 text-left">{newsItem.titre}</td>
+        <td className="py-2 text-center">{formatDate(newsItem.date)}</td>
+        <td className="py-2 text-center flex space-x-2 justify-center">
+          <button
+            onClick={() => handleEditClick(newsItem)}
+            className="bg-[#cc81a1] text-white px-2 py-1 rounded"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDeleteNews(newsItem._id)}
+            className="bg-[#595959] text-white px-2 py-1 rounded"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
 
       {modalVisible && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
