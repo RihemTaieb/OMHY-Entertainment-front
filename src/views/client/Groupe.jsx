@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import customLogodark from '../../assets/img/custom-logo-dark.png'
@@ -20,7 +20,7 @@ const PrevArrow = ({ onClick }) => (
       top: "50%",
       transform: "translateY(-50%)",
       zIndex: 10,
-      background: "rgb(185, 64, 64)",
+      background: "rgba(0, 0, 0, 0.5)",
       border: "none",
       borderRadius: "50%",
       width: "40px",
@@ -44,7 +44,7 @@ const NextArrow = ({ onClick }) => (
       top: "50%",
       transform: "translateY(-50%)",
       zIndex: 10,
-      background: "rgb(185, 64, 64)",
+      background: "rgba(0, 0, 0, 0.5)",
       border: "none",
       borderRadius: "50%",
       width: "40px",
@@ -328,10 +328,23 @@ const Groupe = () => {
   const handleGoBack = () => {
     window.history.back(); // Revenir à la page précédente
   };
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/home#contact-us");
+    setTimeout(() => {
+      const section = document.getElementById("contact-us");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500); // Petit délai pour s'assurer que la navigation est terminée
+  };
 
   if (loading) return <p>Chargement en cours...</p>;
   if (error) return <p>{error}</p>;
   if (!group) return <p>Aucun groupe trouvé.</p>;
+  
+
 
   return (
     <div className="max-w-[1920px] mx-auto scroll-smooth bg-[#FFFFFF]">
@@ -422,11 +435,63 @@ const Groupe = () => {
 
       {/* Header */}
       <header className="py-4 px-4 sm:px-10 z-50 min-h-[70px] relative">
-        <div className="lg:flex lg:items-center gap-x-2 relative">
-          <div className="flex items-center shrink-0">
-          <a href="/home"><img src={customLogodark} alt="logo" className='w-40' /></a>
-          </div>
-        </div>
+      <div className="lg:flex items-center justify-between w-full gap-6 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+  {/* Logo Section */}
+  <div className="flex items-center shrink-0 mb-4 lg:mb-0">
+    <a href="/home">
+      <img src={customLogodark} alt="logo" className="w-40" />
+    </a>
+  </div>
+
+  {/* Navigation Menu */}
+  <ul className="lg:flex items-center justify-center gap-x-6 max-lg:space-y-3 bg-white text-black">
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/Aboutomhy"
+        className="ml-4 hover:underline block transition-all"
+      >
+        About Us
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/artistdetails"
+        className="ml-4 hover:underline block transition-all"
+      >
+        Artists
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/albums"
+        className="ml-4 hover:underline block transition-all"
+      >
+        Album
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/news"
+        className="ml-4 hover:underline block transition-all"
+      >
+        News
+      </a>
+    </li>
+    <li onClick={handleRedirect} className="max-lg:border-b max-lg:py-3 px-3">
+      <span className="ml-4 hover:underline block transition-all">
+        Contact Us
+      </span>
+    </li>
+  </ul>
+
+  {/* Call-to-Action Button */}
+  <div className="flex items-center justify-center bg-transparent px-6 py-2.5 rounded-full border border-black shadow-xl lg:ml-auto max-lg:mt-10">
+    <a href="/casting" className="text-black hover:underline">
+      Casting
+    </a>
+  </div>
+</div>
+
       </header>
       <p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
   <span 
@@ -1005,13 +1070,12 @@ const Groupe = () => {
           justify-content: space-between;
         }
 
-     .details-image {
-  width: 200px;
-  height: 200px; /* Hauteur égale à la largeur pour un carré */
-  object-fit: cover; /* Pour que l'image couvre entièrement le carré sans déformation */
-  border-radius: 8px; /* Coins arrondis si tu le souhaites */
-  margin-right: 20px;
-}
+        .details-image {
+          width: 200px;
+          height: auto;
+          border-radius: 8px;
+          margin-right: 20px;
+        }
 
         .details-info {
           flex: 1;
