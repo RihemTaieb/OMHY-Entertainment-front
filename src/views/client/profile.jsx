@@ -6,6 +6,7 @@ import customLogodark from '../../assets/img/custom-logo-dark.png'
 import customLogo from '../../assets/img/custom-logo.png';
 import { StyleSheetManager ,styled } from 'styled-components';
 import Slider from 'react-slick'; // Assuming you're using react-slick for the carousel
+import { useNavigate } from "react-router-dom";
 
 // Flèche précédente
 const PrevArrow = ({ onClick }) => (
@@ -226,6 +227,7 @@ const Profile = () => {
   const [activeSection, setActiveSection] = useState('main'); // État pour gérer la section active
   const [selectedAlbum, setSelectedAlbum] = useState(null); // Initial state
   const [selectedChanson, setSelectedChanson] = useState(null); // Stocker la chanson sélectionnée
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   
@@ -315,6 +317,16 @@ const Profile = () => {
     const year = d.getFullYear();
     return `${day}-${month}-${year}`;
   };
+  const handleRedirect = () => {
+    navigate("/home#contact-us");
+    setTimeout(() => {
+      const section = document.getElementById("contact-us");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500); // Petit délai pour s'assurer que la navigation est terminée
+  };
+
   return (
     <div className="max-w-[1920px] mx-auto scroll-smooth bg-[#FFFFFF]">
       {/* Bouton Go Back */}
@@ -370,7 +382,9 @@ const Profile = () => {
 <SocialIcon href="https://www.instagram.com/omhy__entertainment?igsh=Y3JzdDk1cmk3ejNl" target="_blank"className="hover:bg-gradient-to-r hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] transition-all duration-300 ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="17" cy="7" r="1.5" fill="#fff" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="1.3s" dur="0.15s" values="0;1"/></circle><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2"><path stroke-dasharray="72" stroke-dashoffset="72" d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="72;0"/></path><path stroke-dasharray="28" stroke-dashoffset="28" d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.6s" values="28;0"/></path></g></svg>
         </SocialIcon>
-       
+        <SocialIcon href="https://www.instagram.com/omhy__entertainment?igsh=Y3JzdDk1cmk3ejNl" target="_blank"className="hover:bg-gradient-to-r hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] transition-all duration-300 ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="17" cy="7" r="1.5" fill="#fff" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="1.3s" dur="0.15s" values="0;1"/></circle><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2"><path stroke-dasharray="72" stroke-dashoffset="72" d="M16 3c2.76 0 5 2.24 5 5v8c0 2.76 -2.24 5 -5 5h-8c-2.76 0 -5 -2.24 -5 -5v-8c0 -2.76 2.24 -5 5 -5h4Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="72;0"/></path><path stroke-dasharray="28" stroke-dashoffset="28" d="M12 8c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.6s" values="28;0"/></path></g></svg>
+        </SocialIcon>
         <SocialIcon
   href="https://www.tiktok.com/@omhy.entertainment"
   target="_blank"
@@ -406,22 +420,78 @@ const Profile = () => {
 
       {/* Header */}
       <header className="py-4 px-4 sm:px-10 z-50 min-h-[70px] relative">
-        <div className="lg:flex lg:items-center gap-x-2 relative">
-          <div className="flex items-center shrink-0">
-          <a href="/home"><img src={customLogodark} alt="logo" className='w-40' /></a>
-          </div>
-        </div>
+      <div className="lg:flex items-center justify-between w-full gap-6 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+  {/* Logo Section */}
+  <div className="flex items-center shrink-0 mb-4 lg:mb-0">
+    <a href="/home">
+      <img src={customLogodark} alt="logo" className="w-40" />
+    </a>
+  </div>
+
+  {/* Navigation Menu */}
+  <ul className="lg:flex items-center justify-center gap-x-6 max-lg:space-y-3 bg-white text-black">
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/Aboutomhy"
+        className="ml-4 hover:underline block transition-all"
+      >
+        About Us
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/artistdetails"
+        className="ml-4 hover:underline block transition-all"
+      >
+        Artists
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/albums"
+        className="ml-4 hover:underline block transition-all"
+      >
+        Album
+      </a>
+    </li>
+    <li className="max-lg:border-b max-lg:py-3 px-3">
+      <a
+        href="/news"
+        className="ml-4 hover:underline block transition-all"
+      >
+        News
+      </a>
+    </li>
+    <li onClick={handleRedirect} className="max-lg:border-b max-lg:py-3 px-3">
+      <span className="ml-4 hover:underline block transition-all">
+        Contact Us
+      </span>
+    </li>
+  </ul>
+
+  {/* Call-to-Action Button */}
+  <div className="flex items-center justify-center bg-transparent px-6 py-2.5 rounded-full border border-black shadow-xl lg:ml-auto max-lg:mt-10">
+    <a href="/casting" className="text-black hover:underline">
+      Casting
+    </a>
+  </div>
+</div>
+
+
       </header>
       <p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px 0' }}>
   <span 
     style={{ 
       fontWeight: 'bold', 
-      fontSize: '5rem', // Taille de la police (très grande)
+      fontSize: '4rem', // Taille de la police (très grande)
       textAlign: 'center', 
       color: '#000' // Couleur du texte
+      
     }}
   >
-    {`${artist.prenom} ${artist.nom}`.toUpperCase()}
+
+  {`${artist.prenom} ${artist.nom}`.toUpperCase()}
+
   </span>
 </p>      {/* Navigation Tabs */}
       <div style={styles.tabs}>
