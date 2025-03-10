@@ -345,45 +345,34 @@ const filteredResults = news.filter((article) =>
   </div>
 
   {/* Navigation Menu */}
-  <ul className="lg:flex items-center justify-center gap-x-6 max-lg:space-y-3 bg-white text-black">
-    <li className="max-lg:border-b max-lg:py-3 px-3">
-      <a
-        href="/Aboutomhy"
-        className="ml-4 hover:underline block transition-all"
-      >
-        About Us
-      </a>
-    </li>
-    <li className="max-lg:border-b max-lg:py-3 px-3">
-      <a
-        href="/artistdetails"
-        className="ml-4 hover:underline block transition-all"
-      >
-        Artists
-      </a>
-    </li>
-    <li className="max-lg:border-b max-lg:py-3 px-3">
-      <a
-        href="/albums"
-        className="ml-4 hover:underline block transition-all"
-      >
-        Album
-      </a>
-    </li>
-    <li className="max-lg:border-b max-lg:py-3 px-3">
-      <a
-        href="/news"
-        className="ml-4 hover:underline block transition-all"
-      >
-        News
-      </a>
-    </li>
-    <li onClick={handleRedirect} className="max-lg:border-b max-lg:py-3 px-3">
-      <span className="ml-4 hover:underline block transition-all">
-        Contact Us
-      </span>
-    </li>
-  </ul>
+<ul className="lg:flex justify-center items-center gap-x-6 max-lg:space-y-3 bg-white text-black w-full h-full">
+  <li className="max-lg:border-b max-lg:py-3 px-3">
+    <a href="/Aboutomhy" className="ml-4 hover:underline block transition-all">
+      About Us
+    </a>
+  </li>
+  <li className="max-lg:border-b max-lg:py-3 px-3">
+    <a href="/artistdetails" className="ml-4 hover:underline block transition-all">
+      Artists
+    </a>
+  </li>
+  <li className="max-lg:border-b max-lg:py-3 px-3">
+    <a href="/albums" className="ml-4 hover:underline block transition-all">
+      Album
+    </a>
+  </li>
+  <li className="max-lg:border-b max-lg:py-3 px-3">
+    <a href="/news" className="ml-4 hover:underline block transition-all">
+      News
+    </a>
+  </li>
+  <li onClick={handleRedirect} className="max-lg:border-b max-lg:py-3 px-3 cursor-pointer">
+    <span className="ml-4 hover:underline block transition-all">
+      Contact Us
+    </span>
+  </li>
+</ul>
+
 
   {/* Call-to-Action Button */}
   <div className="flex items-center justify-center bg-transparent px-6 py-2.5 rounded-full border border-black shadow-xl lg:ml-auto max-lg:mt-10">
@@ -395,7 +384,7 @@ const filteredResults = news.filter((article) =>
 
         </header>
 
-        <div className="font-[sans-serif] px-6 py-16">
+        <div className="font-[sans-serif] px-6 py-10">
           <div className="text-center max-w-3xl max-md:max-w-md mx-auto">
             <h2 className="text-gray-1000 md:text-5xl text-3xl font-extrabold md:!leading-[55px]">
               Latest News
@@ -418,7 +407,7 @@ const filteredResults = news.filter((article) =>
         </div>
 
         {/* News Articles */}
-        <div className="pt-20 flex justify-center">
+        <div className=" flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-2 sm:px-4">
           {currentNews.map((article) => (
   <NewsCard 
